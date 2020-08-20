@@ -32,9 +32,12 @@ def book(request, flight_id):
             flight = Flight.objects.get(pk=flight_id)
         except KeyError:
             return HttpResponseBadRequest("Bad Request: no flight chosen")
+
         except Flight.DoesNotExist:
             return HttpResponseBadRequest("Bad Request: flight does not exist")
+
         except Passenger.DoesNotExist:
             return HttpResponseBadRequest("Bad Request: passenger does not exist")
+
         passenger.flights.add(flight)
         return HttpResponseRedirect(reverse("flights:flight", args=(flight_id,)))
